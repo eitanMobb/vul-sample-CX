@@ -51,4 +51,5 @@ jobs:
           report-file: cx_result.json
           api-key: ${{ secrets.MOBB_API_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          mobb-project-name: demo
           scanner: checkmarx
