@@ -7,12 +7,25 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class SQLInjectionExample extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+
+    @ResponseBody
+    public AttackResult completed(
+      @RequestParam String userid, @RequestParam String login_count, HttpServletRequest request)
+      throws IOException {
+    return runThis(userid);
+    }
+    
+    protected void runThis(String accountName) throws ServletException {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db");
-            String user = request.getParameter("username");
+            String queryString = "SELECT * From user_data WHERE and userid= '" + accountName + "'";
+            Statement stmt = con.createStatement();
+            
+            ResultSet results = stmt.executeQuery(queryString);
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
+
 }
+
